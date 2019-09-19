@@ -44,7 +44,7 @@
         m1 = 0, m2
     }
     export enum directions {
-        forward = 0, reverse
+        forward = 0, backward
     }
     let pca9685init_f = false
 
