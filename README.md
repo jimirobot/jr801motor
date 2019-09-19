@@ -14,6 +14,6 @@ This is JR801 Library
 (The metadata above is needed for package search.)
 
 ```package
-jr801ext=github:jimirobot/jr801ext
+jr801ext=github:jimirobot/jr801motor
 ```
 
