@@ -11,9 +11,7 @@
         "main.ts",
         "_locales/zh/jr801ext-strings.json"
     ],
-    "testFiles": [
-        ""
-    ],
+ 
     "public": true,
     "license": "MIT",
     "preferredEditor": "tsprj"
