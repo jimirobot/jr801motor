@@ -60,7 +60,7 @@
     /*This function is for initialing the pca9685 in jr801  */
     // % blockId="initialPca9685" block="Initial PCA9685"
     // % blockGap=2 weight=10 
-    export function initialPca9685() {
+    export function initialPca9685():void {
         let regvalue
         // read the mode1 register value and set to sleep mode
         regvalue = (0x01) | (0x10)
@@ -87,9 +87,9 @@
 
     /*  this function is to set the servo degree(0-180) application,eg:sg90 1ms-2ms,default=50hz)*/
     //%blockId="setServoPos" block="Set Servo %servo|Degree %servo_degree" 
-    //% blockGap=2 weight=20 blockExternalInputs=true 
+    //% blockGap=2 weight=20  
    
-    export function setServoPos(servo: servonum, servo_degree: number) {
+    export function setServoPos(servo: servonum, servo_degree: number):void {
         let servo_offset = 0
         let servo_degree_offset = 0
         let servo_degree_off_l = 0
@@ -117,9 +117,9 @@
 
     /*  this function is to set dc motor speed including m1/m2,forward/reserve,speed[0-4095]*/
     //% blockId="dcmotorSpeedControl" block="Set DC Motor %dcnum | Direction %dir | Speed %speed" 
-    //% blockGap=2 weight=30 blockExternalInputs=true 
+    //% blockGap=2 weight=30  
  
-    export function dcmotorSpeedControl(dcnum: dcmotors, dir: directions, speed: number) {
+    export function dcmotorSpeedControl(dcnum: dcmotors, dir: directions, speed: number):void {
 
         let dc_speed_h = 0
         let dc_speed_l = 0;
@@ -181,9 +181,9 @@
 
     /*  this function is to set dc motor stop including m1/m2*/
     //% blockId="dcmotorStop" block="Stop DC Motor %dcnum " 
-    //% blockGap=2 weight=40 blockExternalInputs=true 
+    //% blockGap=2 weight=40  
 
-    export function dcmotorStop(dcnum: dcmotors) {
+    export function dcmotorStop(dcnum: dcmotors):void {
         if (dcnum > 1 || dcnum < 0)
             return
         if (pca9685init_f == false)
@@ -200,8 +200,8 @@
     }
     /*  this function is to set all dc motor stop */
     //% blockId="dcmotorStopAll" block="Stop All DC Motor " 
-    //% blockGap=2 weight=50 blockExternalInputs=true 
-    export function dcmotorStopAll() {
+    //% blockGap=2 weight=50  
+    export function dcmotorStopAll():void {
         dcmotorStop(0)
         dcmotorStop(1)
     }
@@ -209,8 +209,8 @@
 
     /*  this function is to set stepper motor angle including forward/reserve,angle*/
     //% blockId="stepControlAngle42" block="Set Stepper Motor Direction %dir| Angle %angle" 
-    //% blockGap=2 weight=60 blockExternalInputs=true 
-    export function stepControlAngle42(dir: directions, angle: number) {
+    //% blockGap=2 weight=60  
+    export function stepControlAngle42(dir: directions, angle: number) :void{
 
         let step_num = Math.floor(angle / 1.8)   //stepper42 1.8 degree/1 stop
         //check if the pca9685 is initialed
@@ -264,9 +264,9 @@
     }
     /*  this function is to set stepper motor turns including forward/reserve,turns*/
     //% blockId="stepControlTurn42" block="Set Stepper Motor Direction %dir|Turns %turn " 
-    //% blockGap=2 weight=70 blockExternalInputs=true 
+    //% blockGap=2 weight=70  
 
-    export function stepControlTurn42(dir: directions, turn: number) {
+    export function stepControlTurn42(dir: directions, turn: number):void {
         let all_degree = 360 * turn   //stepper42 1.8 degree/1 step
         stepControlAngle42(dir, all_degree)
     }
