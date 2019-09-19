@@ -84,6 +84,33 @@
         pca9685init_f = true
     }
 
-
+/*  this function is to set the servo degree(0-180) application,eg:sg90 1ms-2ms,default=50hz)*/
+    //%blockId="setServoPos" block="Set Servo %servo|Degree %servo_degree" 
+    //% blockGap=2 weight=20  
+   
+    export function setServoPos(servo: servonum, servo_degree: number):void {
+        let servo_offset = 0
+        let servo_degree_offset = 0
+        let servo_degree_off_l = 0
+        let servo_degree_off_h = 0
+        //check the limit of servo and serov_degree
+        if (servo < 0) servo = 0
+        if (servo > 7) servo = 7
+        if (servo_degree < 0) servo_degree = 0
+        if (servo_degree > 180) servo_degree = 180
+        //check if the pca9685 is initialed
+        if (pca9685init_f == false)
+            initialPca9685()
+        //cal the servo offset value
+        servo_offset = servo * 4
+        servo_degree_offset = 205 + Math.floor(servo_degree * 1.13)
+        servo_degree_off_h = (servo_degree_offset >> 8) & (0xFF)
+        servo_degree_off_l = (servo_degree_offset) & (0xFF)
+        //write to setting value to pca9685 REG
+        writeI2c9685(CHIP_ADDRESS, REG_LED8_ON_L + servo_offset, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED8_ON_H + servo_offset, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED8_OFF_L + servo_offset, servo_degree_off_l)
+        writeI2c9685(CHIP_ADDRESS, REG_LED8_OFF_H + servo_offset, servo_degree_off_h)
+    }
 }
 
