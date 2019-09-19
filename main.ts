@@ -2,7 +2,7 @@
 //this is for extention library JR801
 //maintained by jimirobot
 
- //% weight=0 color=#4db8ff icon="\uf5fc" block="JR801-MOTOR"
+ //% weight=50 color=#4db8ff icon="\uf0ad" block="JR801-MOTOR"
 
  namespace jr801ext {
 
