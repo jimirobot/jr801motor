@@ -112,5 +112,162 @@
         writeI2c9685(CHIP_ADDRESS, REG_LED8_OFF_L + servo_offset, servo_degree_off_l)
         writeI2c9685(CHIP_ADDRESS, REG_LED8_OFF_H + servo_offset, servo_degree_off_h)
     }
+
+
+    /*  this function is to set dc motor speed including m1/m2,forward/reserve,speed[0-4095]*/
+    //% blockId="dcmotorSpeedControl" block="Set DC Motor %dcnum | Direction %dir | Speed %speed" 
+    //% blockGap=2 weight=30  
+ 
+    export function dcmotorSpeedControl(dcnum: dcmotors, dir: directions, speed: number):void {
+
+        let dc_speed_h = 0
+        let dc_speed_l = 0;
+        //check if the pca9685 is initialed
+        if (speed > 4095)
+            speed = 4095
+        if (speed < 0)
+            speed = 0
+        if (pca9685init_f == false)
+            initialPca9685()
+        dc_speed_h = (speed >> 8) & (0xFF)
+        dc_speed_l = (speed) & (0xFF)
+
+        if (dcnum == 0) {				//m1
+            if (dir == 0) {				//forward
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_L, dc_speed_l)
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_H, dc_speed_h)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_H, 0x00)
+            }
+            else {					//reserve
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_L, dc_speed_l)
+                writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_H, dc_speed_h)
+            }
+        }
+        else {						//m2
+            if (dir == 0) {				//forward
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_L, dc_speed_l)
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_H, dc_speed_h)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_H, 0x00)
+            }
+            else {					//reserve
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_L, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_H, 0x00)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_L, dc_speed_l)
+                writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_H, dc_speed_h)
+            }
+        }
+    }
+
+    /*  this function is to set dc motor stop including m1/m2*/
+    //% blockId="dcmotorStop" block="Stop DC Motor %dcnum " 
+    //% blockGap=2 weight=40  
+
+    export function dcmotorStop(dcnum: dcmotors):void {
+        if (dcnum > 1 || dcnum < 0)
+            return
+        if (pca9685init_f == false)
+            initialPca9685()
+        writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_L + 8 * dcnum, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_H + 8 * dcnum, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_L + 8 * dcnum, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_H + 8 * dcnum, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_L + 8 * dcnum, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_H + 8 * dcnum, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_L + 8 * dcnum, 0x00)
+        writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_H + 8 * dcnum, 0x00)
+
+    }
+    /*  this function is to set all dc motor stop */
+    //% blockId="dcmotorStopAll" block="Stop All DC Motor " 
+    //% blockGap=2 weight=50  
+    export function dcmotorStopAll():void {
+        dcmotorStop(0)
+        dcmotorStop(1)
+    }
+
+
+    /*  this function is to set stepper motor angle including forward/reserve,angle*/
+    //% blockId="stepControlAngle42" block="Set Stepper Motor Direction %dir| Angle %angle" 
+    //% blockGap=2 weight=60  
+    export function stepControlAngle42(dir: directions, angle: number) :void{
+
+        let step_num = Math.floor(angle / 1.8)   //stepper42 1.8 degree/1 stop
+        //check if the pca9685 is initialed
+        if (pca9685init_f == false)
+            initialPca9685()
+
+        if (step_num == 0) {
+            return
+        }
+        if (dir == 0) {       //forward
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_H, 0x0b)
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_H, 0x03)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_H, 0x03)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_H, 0x0b)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_H, 0x07)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_H, 0x0f)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_H, 0x0f)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_H, 0x07)
+
+        }
+        else {    //reserve
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_H, 0x0b)
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED0_OFF_H, 0x03)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_ON_H, 0x03)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED1_OFF_H, 0x0b)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_ON_H, 0x0f)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED2_OFF_H, 0x07)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_H, 0x07)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_L, 0xff)
+            writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_H, 0x0f)
+        }
+        basic.pause(5 * step_num)   //waiting time = (20ms/4) * stepnum
+        dcmotorStop(1)				//stop
+        dcmotorStop(0)
+
+    }
+    /*  this function is to set stepper motor turns including forward/reserve,turns*/
+    //% blockId="stepControlTurn42" block="Set Stepper Motor Direction %dir|Turns %turn " 
+    //% blockGap=2 weight=70  
+
+    export function stepControlTurn42(dir: directions, turn: number):void {
+        let all_degree = 360 * turn   //stepper42 1.8 degree/1 step
+        stepControlAngle42(dir, all_degree)
+    }
 }
 
