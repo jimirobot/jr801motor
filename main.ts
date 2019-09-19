@@ -208,7 +208,7 @@
 
 
     /*  this function is to set stepper motor angle including forward/reserve,angle*/
-    //% blockId="stepControlAngle42" block="Set Stepper Motor Angle %angle | Direction %dir" 
+    //% blockId="stepControlAngle42" block="Set Stepper Motor Direction %dir| Angle %angle" 
     //% blockGap=2 weight=60 blockExternalInputs=true 
     export function stepControlAngle42(dir: directions, angle: number) {
 
@@ -263,7 +263,7 @@
 
     }
     /*  this function is to set stepper motor turns including forward/reserve,turns*/
-    //% blockId="stepControlTurn42" block="Set Stepper Motor Turns %turn " 
+    //% blockId="stepControlTurn42" block="Set Stepper Motor Direction %dir|Turns %turn " 
     //% blockGap=2 weight=70 blockExternalInputs=true 
 
     export function stepControlTurn42(dir: directions, turn: number) {
