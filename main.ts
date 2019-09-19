@@ -59,7 +59,7 @@
 
     /*This function is for initialing the pca9685 in jr801  */
     // % blockId="initialPca9685" block="Initial PCA9685"
-    // % blockGap=2 weight=0 blockExternalInputs=true
+    // % blockGap=2 weight=10 blockExternalInputs=true
     export function initialPca9685() {
         let regvalue
         // read the mode1 register value and set to sleep mode
@@ -87,7 +87,7 @@
 
     /*  this function is to set the servo degree(0-180) application,eg:sg90 1ms-2ms,default=50hz)*/
     //%blockId="setServoPos" block="Set Servo %servo|Degree %servo_degree" 
-    //% blockGap=2 weight=0 blockExternalInputs=true 
+    //% blockGap=2 weight=20 blockExternalInputs=true 
     //% servo_degree.min=0 servo_degree.max=180 servo_degree.defl=0
     //% servo.fieldEditor="gridpicker"
     export function setServoPos(servo: servonum, servo_degree: number) {
@@ -118,7 +118,7 @@
 
     /*  this function is to set dc motor speed including m1/m2,forward/reserve,speed[0-4095]*/
     //% blockId="dcmotorSpeedControl" block="Set DC Motor %dcnum | Direction %dir | Speed %speed" 
-    //% blockGap=2 weight=0 blockExternalInputs=true 
+    //% blockGap=2 weight=30 blockExternalInputs=true 
     //% speed.min=0 speed.max=4095 speed.defl=0
     //% dcnum.fieldEditor="gridpicker"
     //% dir.fieldEditor="gridpicker"
@@ -185,7 +185,7 @@
 
     /*  this function is to set dc motor stop including m1/m2*/
     //% blockId="dcmotorStop" block="Stop DC Motor %dcnum " 
-    //% blockGap=2 weight=0 blockExternalInputs=true 
+    //% blockGap=2 weight=40 blockExternalInputs=true 
     //% dcnum.fieldEditor="gridpicker"
 
     export function dcmotorStop(dcnum: dcmotors) {
@@ -205,7 +205,7 @@
     }
     /*  this function is to set all dc motor stop */
     //% blockId="dcmotorStopAll" block="Stop All DC Motor " 
-    //% blockGap=2 weight=0 blockExternalInputs=true 
+    //% blockGap=2 weight=50 blockExternalInputs=true 
     export function dcmotorStopAll() {
         dcmotorStop(0)
         dcmotorStop(1)
@@ -214,7 +214,7 @@
 
     /*  this function is to set stepper motor angle including forward/reserve,angle*/
     //% blockId="stepControlAngle42" block="Set Stepper Motor Angle %angle | Direction %dir" 
-    //% blockGap=2 weight=0 blockExternalInputs=true 
+    //% blockGap=2 weight=60 blockExternalInputs=true 
     //% angle.min=0 angle.max=720 angle.defl=0
     //% angle.fieldEditor="gridpicker"
     export function stepControlAngle42(dir: directions, angle: number) {
@@ -271,7 +271,7 @@
     }
     /*  this function is to set stepper motor turns including forward/reserve,turns*/
     //% blockId="stepControlTurn42" block="Set Stepper Motor Turns %turn " 
-    //% blockGap=2 weight=0 blockExternalInputs=true 
+    //% blockGap=2 weight=70 blockExternalInputs=true 
     //% turn.min=0 turn.max=720 turn.defl=0
     //% turn.fieldEditor="gridpicker"
     export function stepControlTurn42(dir: directions, turn: number) {
