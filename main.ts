@@ -37,13 +37,13 @@
     const FREQ_SET = 121
     const SERVO_POS_START = 205
     const REG_MODE2 = 1
-    enum servonum {
+    export enum servonum {
         servo1 = 0, servo2, servo3, servo4, servo5, servo6, servo7, servo8
     }
-    enum dcmotors {
+    export enum dcmotors {
         m1 = 0, m2
     }
-    enum directions {
+    export enum directions {
         forward = 0, reverse
     }
     let pca9685init_f = false
