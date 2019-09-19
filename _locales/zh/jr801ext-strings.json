@@ -1,9 +1,9 @@
 {
         "jr801ext|block": "JR801馬達驅動",
-        "jr801ext.initialPca9685": "初始化PCA9685",
+        "jr801ext.initialPca9685|block": "初始化PCA9685",
         "jr801ext.setServoPos|block": "設定伺服馬達 %servo |角度 %angle",
-        "jr801ext.dcmotorSpeedControl": "設定直流馬達 %dcnum|速度 %speed |方向 %dir ",
+        "jr801ext.dcmotorSpeedControl|block": "設定直流馬達 %dcnum|速度 %speed |方向 %dir ",
         "jr801ext.dcmotorStop|block": "停止直流馬達 %dcnum",
         "jr801ext.sstepControlAngle42|block": "設定步進馬達角度 %angle",
-        "jr801ext.stepControlTurn42":"設定步進馬達圈數 %turn"
+        "jr801ext.stepControlTurn42|block":"設定步進馬達圈數 %turn"
      }
