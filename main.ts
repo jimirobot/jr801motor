@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //20190920 ver.1
 //this is for extention library JR801
 //maintained by jimirobot
@@ -6,6 +7,15 @@
 
 //% weight=50 color=#4db8ff icon="\uf0ad" block="JR801-Motor"
 namespace jr801ext {
+=======
+//20190919 ver.1
+//this is for extention library JR801
+//maintained by jimirobot
+
+ //% weight=50 color=#4db8ff icon="\uf0ad" block="JR801-MOTOR"
+
+ namespace jr801ext {
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
 
     const REG_MODE1 = 0
     const CHIP_ADDRESS = 65
@@ -39,6 +49,7 @@ namespace jr801ext {
     const SERVO_POS_START = 205
     const REG_MODE2 = 1
     export enum servonum {
+<<<<<<< HEAD
         Servo1 = 0, Servo2, Servo3, Servo4, Servo5, Servo6, Servo7, Servo8
     }
     export enum lednum {
@@ -49,6 +60,15 @@ namespace jr801ext {
     }
     export enum directions {
         Forward = 0, Backward
+=======
+        servo1 = 0, servo2, servo3, servo4, servo5, servo6, servo7, servo8
+    }
+    export enum dcmotors {
+        m1 = 0, m2
+    }
+    export enum directions {
+        forward = 0, backward
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
     }
     let pca9685init_f = false
 
@@ -62,9 +82,15 @@ namespace jr801ext {
 
 
     /*This function is for initialing the pca9685 in jr801  */
+<<<<<<< HEAD
     //% block="Initial PCA9685" blockId="initialPca9685" 
     //% blockGap=2 weight=90 blockExternalInputs=true
     export function initialPca9685(): void {
+=======
+    // % blockId="initialPca9685" block="Initial PCA9685"
+    // % blockGap=2 weight=10 
+    export function initialPca9685():void {
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
         let regvalue
         // read the mode1 register value and set to sleep mode
         regvalue = (0x01) | (0x10)
@@ -88,6 +114,7 @@ namespace jr801ext {
         pca9685init_f = true
     }
 
+<<<<<<< HEAD
     /* this function is to set led duty cycle 0-100 and the period is 20ms */
     //% blockId="setLedDutyCycle" block="Set LED Duty Cycle %led| Duty %duty" 
     //% blockGap=2 weight=80 
@@ -131,6 +158,13 @@ namespace jr801ext {
     //% blockId="setServoPos" block="Set Servo %servo|Degree %servo_degree" 
     //% blockGap=2 weight=70 blockExternalInputs=true 
     export function setServoPos(servo: servonum, servo_degree: number) {
+=======
+/*  this function is to set the servo degree(0-180) application,eg:sg90 1ms-2ms,default=50hz)*/
+    //%blockId="setServoPos" block="Set Servo %servo|Degree %servo_degree" 
+    //% blockGap=2 weight=20  
+   
+    export function setServoPos(servo: servonum, servo_degree: number):void {
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
         let servo_offset = 0
         let servo_degree_offset = 0
         let servo_degree_off_l = 0
@@ -157,6 +191,7 @@ namespace jr801ext {
 
 
     /*  this function is to set dc motor speed including m1/m2,forward/reserve,speed[0-4095]*/
+<<<<<<< HEAD
     //% blockId="dcmotorSpeedControl" block="Set DC Motor %dcnum|Direction%dir|Speed%speed" 
     //% blockGap=2 weight=60 
     //% speed.min=0 speed.max=4095 speed.defl=0
@@ -173,6 +208,20 @@ namespace jr801ext {
         if (dir < 0) dir = 0
         if (dir > 1) dir = 1
         //check if the pca9685 is initialed
+=======
+    //% blockId="dcmotorSpeedControl" block="Set DC Motor %dcnum | Direction %dir | Speed %speed" 
+    //% blockGap=2 weight=30  
+ 
+    export function dcmotorSpeedControl(dcnum: dcmotors, dir: directions, speed: number):void {
+
+        let dc_speed_h = 0
+        let dc_speed_l = 0;
+        //check if the pca9685 is initialed
+        if (speed > 4095)
+            speed = 4095
+        if (speed < 0)
+            speed = 0
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
         if (pca9685init_f == false)
             initialPca9685()
         dc_speed_h = (speed >> 8) & (0xFF)
@@ -225,10 +274,17 @@ namespace jr801ext {
     }
 
     /*  this function is to set dc motor stop including m1/m2*/
+<<<<<<< HEAD
     //% blockId="dcmotorStop" block="Stop DC Motor%dcnum " 
     //% blockGap=2 weight=50  
 
     export function dcmotorStop(dcnum: dcmotors) {
+=======
+    //% blockId="dcmotorStop" block="Stop DC Motor %dcnum " 
+    //% blockGap=2 weight=40  
+
+    export function dcmotorStop(dcnum: dcmotors):void {
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
         if (dcnum > 1 || dcnum < 0)
             return
         if (pca9685init_f == false)
@@ -245,14 +301,20 @@ namespace jr801ext {
     }
     /*  this function is to set all dc motor stop */
     //% blockId="dcmotorStopAll" block="Stop All DC Motor " 
+<<<<<<< HEAD
     //% blockGap=2 weight=40  
     export function dcmotorStopAll() {
+=======
+    //% blockGap=2 weight=50  
+    export function dcmotorStopAll():void {
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
         dcmotorStop(0)
         dcmotorStop(1)
     }
 
 
     /*  this function is to set stepper motor angle including forward/reserve,angle*/
+<<<<<<< HEAD
     //% blockId="stepControlAngle42" block="Set Stepper Motor Angle%angle|Direction%dir" 
     //% blockGap=2 weight=30 
     //% angle.min=0 angle.max=720 angle.defl=0
@@ -269,6 +331,20 @@ namespace jr801ext {
         if (pca9685init_f == false)
             initialPca9685()
         if (step_num == 0) return
+=======
+    //% blockId="stepControlAngle42" block="Set Stepper Motor Direction %dir| Angle %angle" 
+    //% blockGap=2 weight=60  
+    export function stepControlAngle42(dir: directions, angle: number) :void{
+
+        let step_num = Math.floor(angle / 1.8)   //stepper42 1.8 degree/1 stop
+        //check if the pca9685 is initialed
+        if (pca9685init_f == false)
+            initialPca9685()
+
+        if (step_num == 0) {
+            return
+        }
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
         if (dir == 0) {       //forward
             writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_L, 0xff)
             writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_H, 0x0b)
@@ -286,6 +362,10 @@ namespace jr801ext {
             writeI2c9685(CHIP_ADDRESS, REG_LED3_ON_H, 0x0f)
             writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_L, 0xff)
             writeI2c9685(CHIP_ADDRESS, REG_LED3_OFF_H, 0x07)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
         }
         else {    //reserve
             writeI2c9685(CHIP_ADDRESS, REG_LED0_ON_L, 0xff)
@@ -311,6 +391,7 @@ namespace jr801ext {
 
     }
     /*  this function is to set stepper motor turns including forward/reserve,turns*/
+<<<<<<< HEAD
     //% blockId="stepControlTurn42" block="Set Stepper Motor Turns%turn|Direction%dir " 
     //% blockGap=2 weight=20  
     //% turn.min=0 turn.max=720 turn.defl=0
@@ -327,3 +408,14 @@ namespace jr801ext {
 
 
 
+=======
+    //% blockId="stepControlTurn42" block="Set Stepper Motor Direction %dir|Turns %turn " 
+    //% blockGap=2 weight=70  
+
+    export function stepControlTurn42(dir: directions, turn: number):void {
+        let all_degree = 360 * turn   //stepper42 1.8 degree/1 step
+        stepControlAngle42(dir, all_degree)
+    }
+}
+
+>>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
