@@ -1,10 +1,6 @@
 {
     "name": "jr801ext",
-<<<<<<< HEAD
     "version": "0.9.0",
-=======
-    "version": "0.0.1",
->>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
     "description": "This is JR801 Extension Library",
     "dependencies": {
         "core": "*",
@@ -13,14 +9,8 @@
     "files": [
         "README.md",
         "main.ts",
-<<<<<<< HEAD
         "_locales/zh/jr801ext-strings.json"
     ],
-=======
-        "_locales/zh/tools-strings.json"
-    ],
- 
->>>>>>> 0d9ee29fe1e4bec2d456a34abc15ef1c1fc8cb96
     "public": true,
     "license": "MIT",
     "preferredEditor": "tsprj"
