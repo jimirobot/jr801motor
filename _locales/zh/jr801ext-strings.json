@@ -1,0 +1,11 @@
+{
+        "jr801ext|block": "JR801馬達驅動",
+        "jr801ext.initialPca9685|block": "初始化PCA9685",
+        "jr801ext.setLedDutyCycle|block": "設定LED佔空比 %led| Duty %duty",
+        "jr801ext.setServoPos|block": "設定伺服馬達 %servo|角度 %servo_degree",
+        "jr801ext.dcmotorSpeedControl|block": "設定DC馬達%dcnum|方向%dir|速度%speed",
+        "jr801ext.dcmotorStop|block": "停止DC馬達 %dcnum",
+        "jr801ext.dcmotorStopAll|block": "停止所有DC馬達",
+        "jr801ext.sstepControlAngle42|block": "設定步進馬達 角度%angle|方向%dir",
+        "jr801ext.stepControlTurn42|block":"設定步進馬達 圈數%turn|方向%dir"
+     }
